@@ -11,9 +11,9 @@ var usersRouter = require('./routes/users');
 
 var app = express();
 
-const cors = require("cors")
+//const cors = require("cors")
 
-app.use(cors(corsOptions))
+//app.use(cors(corsOptions))
 
 app.use(logger('dev'));
 app.use(express.json());
