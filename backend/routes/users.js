@@ -12,6 +12,7 @@ router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
 
+//creation de compte
 router.post("/users/signup", (req, res) => {
   console.log("signup route");
   console.log(req.body);
@@ -48,6 +49,8 @@ router.post("/users/signup", (req, res) => {
     });
 });
 
+
+//connexion
 router.post("/users/signin", (req, res) => {
   try {
     if (!checkBody(req.body, ["email", "password"])) {
@@ -80,6 +83,7 @@ router.post("/users/signin", (req, res) => {
   }
 });
 
+//deconnexion
 router.put("/users/logout", (req, res) => {
   const { token } = req.body;
 
