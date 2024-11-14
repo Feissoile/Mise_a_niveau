@@ -2,11 +2,12 @@ const mongoose = require("mongoose")
 
 
 const userSchema = mongoose.Schema({
-  nickName: String,
+  nickname: String,
   email: String,
   adress: String,
   password: String,
-  token: String
+  token: String,
+  islog: Boolean
   })
 
 const User = mongoose.model("users", userSchema)
