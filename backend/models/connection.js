@@ -7,5 +7,5 @@ mongoose.set("strictQuery", true)
 
 mongoose
   .connect(connectionString, { connectTimeoutMS: 2000 })
-  .then(() => console.log("Successfully connected to the Tablée Database 🥳 !"))
+  .then(() => console.log("Successfully connected to Mise_a_Niveau 🥳 !"))
   .catch((errorMessage) => console.error(errorMessage))
