@@ -12,7 +12,7 @@ router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
 
-router.post("/user/signup", (req, res) => {
+router.post("/users/signup", (req, res) => {
   console.log("signup route");
   console.log(req.body);
   if (!checkBody(req.body, ["nickname", "email", "adress", "password"])) {
@@ -47,5 +47,62 @@ router.post("/user/signup", (req, res) => {
       res.json({ result: false, error: "Erreur" });
     });
 });
+
+router.post("/users/signin", (req, res) => {
+  try {
+    if (!checkBody(req.body, ["email", "password"])) {
+      res.json({ result: false, error: "Un des champs est manquant ou vide" });
+      return;
+    }
+
+    User.findOne({ email: { $regex: new RegExp(req.body.email, "i") } })
+      .then((data) => {
+        console.log("data => ", data);
+        console.log(
+          "password resp => ",
+          bcrypt.compareSync(req.body.password, data.password)
+        );
+        if (data && bcrypt.compareSync(req.body.password, data.password)) {
+          res.json({ result: true, email: data.email, token: data.token });
+        } else {
+          res.json({
+            result: false,
+            error: "Utilisateur non trouvé ou mot de passe erroné",
+          });
+        }
+      })
+      .catch((error) => {
+        console.error("Erreur de connexion:", error);
+        res.json({ result: false, error: "Erreur de connexion" });
+      });
+  } catch (error) {
+    res.status(500).json({ message: "error", error });
+  }
+});
+
+router.put("/users/logout", (req, res) => {
+  const { token } = req.body;
+
+  if (!token) {
+    return res.json({ result: false, error: "Token invalide" });
+  }
+
+  User.updateOne({ token: token }, { isLog: false })
+    .then((result) => {
+      if (result.modifiedCount > 0) {
+        res.json({ result: true, message: "Déconnexion réussie" });
+      } else {
+        res.json({
+          result: false,
+          error: "Utilisateur non trouvé ou déjà déconnecté",
+        });
+      }
+    })
+    .catch((error) => {
+      console.error("Erreur de déconnexion:", error);
+      res.json({ result: false, error: "Erreur de déconnexion" });
+    });
+});
+
 
 module.exports = router;
