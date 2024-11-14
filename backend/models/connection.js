@@ -1,5 +1,8 @@
 const mongoose = require("mongoose")
-const connectionString = process.env.DB_CONNECTION_STRING
+import dotenv from 'dotenv';
+dotenv.config();
+
+const connectionString = process.env.CONNECTION_STRING;
 mongoose.set("strictQuery", true)
 
 mongoose
