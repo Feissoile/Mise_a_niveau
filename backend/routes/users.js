@@ -32,7 +32,7 @@ router.post("/signup", (req, res) => {
           adress: req.body.adress,
           password: hash,
           token: uid2(32),
-          isLog: true,
+          islog: true,
         });
 
         newUser.save().then((data) => {
