@@ -8,7 +8,7 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var widgetRouter = require('./routes/widget');
+var widgetRouter = require('./routes/widgets');
 
 var app = express();
 
@@ -24,6 +24,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/widget', widgetRouter);
+app.use('/widgets', widgetRouter);
 
 module.exports = app;

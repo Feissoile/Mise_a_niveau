@@ -5,6 +5,9 @@ require("../models/connection.js");
 const Widget = require("../models/user.js");
 
 
+//requete pour creer un widget 
+
+
 //requete pour mettre a jour un widget
 router.put('/widgets/:id', async (req, res) => {
     try {
