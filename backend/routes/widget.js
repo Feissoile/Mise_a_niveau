@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
+require("../models/connection.js");
 const Widget = require("../models/user.js");
 
 
@@ -24,7 +25,7 @@ router.put('/widgets/:id', async (req, res) => {
 
 
   //requete pour supprimmer un widget
-  
+
   router.delete('/widgets/:id', async (req, res) => {
     try {
       const widgetId = req.params.id;

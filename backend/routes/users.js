@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-const connection = require("../models/connection.js");
+require("../models/connection.js");
 const User = require("../models/user.js");
 const { checkBody } = require("../modules/checkBody.js");
 const bcrypt = require("bcrypt");
