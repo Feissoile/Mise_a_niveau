@@ -1,4 +1,4 @@
-var express = require('express');
+var express = require("express");
 var router = express.Router();
 
 require("../models/connection.js");
@@ -8,8 +8,8 @@ const bcrypt = require("bcrypt");
 const uid2 = require("uid2");
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+router.get("/", function (req, res, next) {
+  res.send("respond with a resource");
 });
 
 //creation de compte
@@ -34,9 +34,9 @@ router.post("/signup", (req, res) => {
           token: uid2(32),
           isLog: true,
         });
+        console.log('Utilisateur à enregistrer :', newUser);
 
         newUser.save().then((data) => {
-          console.log("back : ", data.profilePicture);
           res.json({ result: true, user: data });
         });
       } else {
@@ -48,7 +48,6 @@ router.post("/signup", (req, res) => {
       res.json({ result: false, error: "Erreur" });
     });
 });
-
 
 //connexion
 router.post("/signin", (req, res) => {
@@ -107,6 +106,5 @@ router.put("/logout", (req, res) => {
       res.json({ result: false, error: "Erreur de déconnexion" });
     });
 });
-
 
 module.exports = router;
