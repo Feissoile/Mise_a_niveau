@@ -30,7 +30,7 @@ router.post("/signup", (req, res) => {
           nickname: req.body.nickname,
           email: req.body.email,
           adress: req.body.adress,
-          password: req.body.password,
+          password: hash,
           token: uid2(32),
           isLog: true,
         });
