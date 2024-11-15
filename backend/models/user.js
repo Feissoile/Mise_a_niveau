@@ -7,7 +7,7 @@ const userSchema = mongoose.Schema({
   adress: String,
   password: String,
   token: String,
-  islog: Boolean
+  isLog: Boolean
   })
 
 const User = mongoose.model("users", userSchema)
