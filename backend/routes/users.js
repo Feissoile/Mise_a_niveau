@@ -13,7 +13,7 @@ router.get('/', function(req, res, next) {
 });
 
 //creation de compte
-router.post("/users/signup", (req, res) => {
+router.post("/signup", (req, res) => {
   console.log("signup route");
   console.log(req.body);
   if (!checkBody(req.body, ["nickname", "email", "adress", "password"])) {
@@ -51,7 +51,7 @@ router.post("/users/signup", (req, res) => {
 
 
 //connexion
-router.post("/users/signin", (req, res) => {
+router.post("/signin", (req, res) => {
   try {
     if (!checkBody(req.body, ["email", "password"])) {
       res.json({ result: false, error: "Un des champs est manquant ou vide" });
@@ -84,7 +84,7 @@ router.post("/users/signin", (req, res) => {
 });
 
 //deconnexion
-router.put("/users/logout", (req, res) => {
+router.put("/logout", (req, res) => {
   const { token } = req.body;
 
   if (!token) {
