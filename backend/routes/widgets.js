@@ -2,13 +2,13 @@ var express = require("express");
 var router = express.Router();
 
 require("../models/connection.js");
-const Widget = require("../models/user.js");
+const Widget = require("../models/widgets.js");
 const { checkBody } = require("../modules/checkBody.js");
 
 //creation d'un widget
 router.post("/widgets", (req, res) => {
   try {
-    if (!checkBody(req.body, ["name"])) {
+    if (!checkBody(req.body, ["name", "description", "category"])) {
       res.json({ result: false, error: "champ vide" });
       return;
     }
