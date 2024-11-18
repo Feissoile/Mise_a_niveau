@@ -5,7 +5,7 @@ require("../models/connection.js");
 const Widget = require("../models/user.js");
 const { checkBody } = require("../modules/checkBody.js");
 
-//requete pour creer un widget
+//creation d'un widget
 router.post("/widgets", (req, res) => {
   try {
     if (!checkBody(req.body, ["name"])) {
@@ -57,7 +57,7 @@ router.post("/widgets", (req, res) => {
   }
 });
 
-//requete pour mettre a jour un widget
+//maj widget
 router.put("/widgets/:id", async (req, res) => {
   try {
     const widgetId = req.params.id;
@@ -79,7 +79,7 @@ router.put("/widgets/:id", async (req, res) => {
   }
 });
 
-//requete pour supprimmer un widget
+//delete widget
 
 router.delete("/widgets/:id", async (req, res) => {
   try {
