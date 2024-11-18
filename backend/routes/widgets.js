@@ -2,7 +2,7 @@ var express = require("express");
 var router = express.Router();
 
 require("../models/connection.js");
-const Widget = require("../models/widgets.js");
+const Widget = require("../models/widget.js");
 const { checkBody } = require("../modules/checkBody.js");
 
 //creation d'un widget
