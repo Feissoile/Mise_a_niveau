@@ -58,7 +58,7 @@ router.post("/NewWidgets", (req, res) => {
 });
 
 //maj widget
-router.put("/widgets/:id", async (req, res) => {
+router.put("/widgetsUpdated/:id", async (req, res) => {
   try {
     const widgetId = req.params.id;
     const updateData = req.body;
