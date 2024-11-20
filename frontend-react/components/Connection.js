@@ -1,24 +1,24 @@
-import React, { useState, useEffect } from "react";
-import {Alert,
-    StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  Modal,
-  TextInput,
-  Image,
-  KeyboardAvoidingView,
-  ScrollView,
-  
-} from "react"
+import React, { useState } from "react";
 
 const BACKEND_ADDRESS = "http://localhost:3000";
 
 function Connection() {
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [nickname, setNickname] = useState("");
+  const [adress, setAdress] = useState("");
+  const [description, setDescription] = useState("");
   const [signInUsermail, setSignInUsermail] = useState("");
   const [signInPassword, setSignInPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleConnection = () => {
+    if (!signInUsermail || !signInPassword) {
+      alert("Tous les champs sont obligatoires !");
+      return;
+    }
+
+    setIsLoading(true);
+
     console.log({ email: signInUsermail, password: "********" }); // Cacher le mot de passe dans les logs
     fetch(`${BACKEND_ADDRESS}/users/signin`, {
       method: "POST",
@@ -28,17 +28,49 @@ function Connection() {
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
+        setIsLoading(false);
         if (data.result) {
-          //dispatch(login({ email: signInUsermail, token: data.token }));
+          alert("Connexion réussie !");
           setSignInUsermail("");
           setSignInPassword("");
         } else {
-          Alert.alert("Email et/ou mot de passe incorrect(s).");
+          alert("Email et/ou mot de passe incorrect(s).");
         }
+      })
+      .catch((error) => {
+        setIsLoading(false);
+        alert("Erreur serveur, veuillez réessayer plus tard.");
+        console.error("Erreur de connexion :", error);
       });
   };
 
-  return <div></div>;
+  return (
+    <div style={styles.container}>
+      <h1 style={styles.title}>Connexion</h1>
+      <input
+        style={styles.input}
+        type="email"
+        placeholder="Email"
+        value={signInUsermail}
+        onChange={(e) => setSignInUsermail(e.target.value)}
+      />
+      <input
+        style={styles.input}
+        type="password"
+        placeholder="Mot de passe"
+        value={signInPassword}
+        onChange={(e) => setSignInPassword(e.target.value)}
+      />
+      <button
+        style={styles.button}
+        onClick={handleConnection}
+        disabled={isLoading}
+      >
+        {isLoading ? "Connexion en cours..." : "Se connecter"}
+      </button>
+    </div>
+  );
 }
 
+const styles = {};
 export default Connection;
