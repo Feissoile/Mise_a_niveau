@@ -81,7 +81,7 @@ router.put("/widgetsUpdated/:id", async (req, res) => {
 
 //delete widget
 
-router.delete("/widgets/:id", async (req, res) => {
+router.delete("/widgetsDeleted/:id", async (req, res) => {
   try {
     const widgetId = req.params.id;
 
