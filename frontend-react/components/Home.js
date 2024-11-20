@@ -1,13 +1,11 @@
 import styles from '../styles/Home.module.css';
+import Connection from './Connection';
+import React from 'react';
 
 function Home() {
  return (
    <div>
-     <main className={styles.main}>
-       <h1 className={styles.title}>
-         Welcome to <a href="https://nextjs.org">Next.js!</a>
-       </h1>
-     </main>
+     <Connection />
    </div>
  );
 }
