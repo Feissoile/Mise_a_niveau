@@ -11,6 +11,31 @@ function Connection() {
   const [signInPassword, setSignInPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
+  const createProfile = async (userData) => {
+    setIsLoading(true);
+    try {
+      const resCreation = await fetch(`${BACKEND_ADDRESS}/users/signup`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(userData),
+      });
+
+      if (!resCreation.ok) {
+        throw new Error(`Erreur HTTP : ${resCreation.status}`);
+      }
+
+      console.log(createProfile);
+      const dataCreation = await resCreation.json();
+      console.log(dataCreation);
+      if (!dataCreation.result) {
+        throw new Error(dataCreation.error || "Error signing up");
+      }
+    } catch (e) {
+      console.error("Erreur lors de la création du profil :", e.message);
+      alert(e.message);
+    }
+  };
+
   const handleConnection = () => {
     if (!signInUsermail || !signInPassword) {
       alert("Tous les champs sont obligatoires !");
