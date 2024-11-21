@@ -42,37 +42,39 @@ function Connection() {
     }
   };
 
-  const handleConnection = () => {
+  const handleConnection = async () => {
     if (!signInUsermail || !signInPassword) {
       alert("Tous les champs sont obligatoires !");
       return;
     }
 
     setIsLoading(true);
-
-    console.log({ email: signInUsermail, password: "********" }); // Cacher le mot de passe dans les logs
-    fetch(`${BACKEND_ADDRESS}/users/signin`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email: signInUsermail, password: signInPassword }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        setIsLoading(false);
-        if (data.result) {
-          alert("Connexion réussie !");
-          setSignInUsermail("");
-          setSignInPassword("");
-        } else {
-          alert("Email et/ou mot de passe incorrect(s).");
-        }
-      })
-      .catch((error) => {
-        setIsLoading(false);
-        alert("Erreur serveur, veuillez réessayer plus tard.");
-        console.error("Erreur de connexion :", error);
+    try {
+      console.log({ email: signInUsermail, password: "********" }); // Cacher le mot de passe dans les logs
+      const response = await fetch(`${BACKEND_ADDRESS}/users/signin`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: signInUsermail,
+          password: signInPassword,
+        }),
       });
+      const data = await response.json();
+      console.log(data);
+
+      setIsLoading(false);
+      if (data.result) {
+        alert("Connexion réussie !");
+        setSignInUsermail("");
+        setSignInPassword("");
+      } else {
+        alert("Email et/ou mot de passe incorrect(s).");
+      }
+    } catch (error) {
+      setIsLoading(false);
+      alert("Erreur serveur, veuillez réessayer plus tard.");
+      console.error("Erreur de connexion :", error);
+    }
   };
 
   return (
