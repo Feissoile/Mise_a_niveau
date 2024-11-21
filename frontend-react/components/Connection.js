@@ -9,26 +9,32 @@ function Connection() {
   const [description, setDescription] = useState("");
   const [signInUsermail, setSignInUsermail] = useState("");
   const [signInPassword, setSignInPassword] = useState("");
+  const [signUpUsermail, setSignUpUsermail] = useState("");
+  const [signUpPassword, setSignUpPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const createProfile = async (userData) => {
+  const handleSignup = async () => {
     setIsLoading(true);
     try {
-      const resCreation = await fetch(`${BACKEND_ADDRESS}/users/signup`, {
+      const response = await fetch(`${BACKEND_ADDRESS}/users/signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(userData),
+        body: JSON.stringify({
+          nickname,
+          email: signUpUsermail,
+          adress,
+          password: signUpPassword,
+        }),
       });
-
-      if (!resCreation.ok) {
-        throw new Error(`Erreur HTTP : ${resCreation.status}`);
-      }
-
-      console.log(createProfile);
-      const dataCreation = await resCreation.json();
-      console.log(dataCreation);
-      if (!dataCreation.result) {
-        throw new Error(dataCreation.error || "Error signing up");
+      const data = await response.json();
+      if (data.result) {
+        setIsModalVisible(false); // Fermer la modale
+        setNickname("");
+        setSignUpUsermail("");
+        setAdress("");
+        setSignUpPassword("");
+      } else {
+        alert(data.error || "Erreur lors de l'inscription.");
       }
     } catch (e) {
       console.error("Erreur lors de la création du profil :", e.message);
@@ -71,28 +77,73 @@ function Connection() {
 
   return (
     <div style={styles.container}>
-      <h1 style={styles.title}>Connexion</h1>
+      <h2>Connexion</h2>
       <input
-        style={styles.input}
         type="email"
         placeholder="Email"
         value={signInUsermail}
         onChange={(e) => setSignInUsermail(e.target.value)}
+        style={styles.input}
       />
       <input
-        style={styles.input}
         type="password"
         placeholder="Mot de passe"
         value={signInPassword}
         onChange={(e) => setSignInPassword(e.target.value)}
+        style={styles.input}
       />
-      <button
-        style={styles.button}
-        onClick={handleConnection}
-        disabled={isLoading}
-      >
-        {isLoading ? "Connexion en cours..." : "Se connecter"}
+      <button onClick={handleConnection} style={styles.button}>
+        Se connecter
       </button>
+
+      <button onClick={() => setIsModalVisible(true)} style={styles.linkButton}>
+        Pas encore inscrit ? Créez un compte
+      </button>
+
+      {isModalVisible && (
+        <div style={styles.modal}>
+          <div style={styles.modalContent}>
+            <h3>Créer un compte</h3>
+            <input
+              type="text"
+              placeholder="Pseudo"
+              value={nickname}
+              onChange={(e) => setNickname(e.target.value)}
+              style={styles.input}
+            />
+            <input
+              type="email"
+              placeholder="Email"
+              value={signInUsermail}
+              onChange={(e) => setSignInUsermail(e.target.value)}
+              style={styles.input}
+            />
+            <input
+              type="text"
+              placeholder="Adresse"
+              value={adress}
+              onChange={(e) => setAdress(e.target.value)}
+              style={styles.input}
+            />
+            <input
+              type="password"
+              placeholder="Mot de passe"
+              value={signUpPassword}
+              onChange={(e) => setSignUpPassword(e.target.value)}
+              style={styles.input}
+            />
+            <button onClick={handleSignup} style={styles.button}>
+              S'inscrire
+            </button>
+            <button
+              onClick={() => setIsModalVisible(false)}
+              style={styles.closeButton}
+            >
+              Annuler
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
