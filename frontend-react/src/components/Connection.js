@@ -116,8 +116,8 @@ function Connection() {
             <input
               type="email"
               placeholder="Email"
-              value={signInUsermail}
-              onChange={(e) => setSignInUsermail(e.target.value)}
+              value={signUpUsermail}
+              onChange={(e) => setSignUpUsermail(e.target.value)}
               style={styles.input}
             />
             <input

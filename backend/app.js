@@ -12,9 +12,9 @@ var widgetsRouter = require('./routes/widgets');
 
 var app = express();
 
-//const cors = require("cors")
+const cors = require("cors")
 
-//app.use(cors(corsOptions))
+app.use(cors(corsOptions))
 
 
 
